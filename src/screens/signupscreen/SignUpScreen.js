@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, ScrollView, StyleSheet,Text, Alert } from "react-native";
+import { View, ScrollView, StyleSheet, Text, Alert } from "react-native";
 import { supabase } from "../../../lib/supabase";
 import CustomButton from "../../component/CustomButtom";
 import CustomInput from "../../component/customInput/CustomInput";
@@ -12,14 +12,17 @@ const SignUpScreen = () => {
   const [loading, setLoading] = useState(false);
   async function signUpWithEmail() {
     setLoading(true);
-    const { data: { session },error} = await supabase.auth.signUp({
+    const {
+      data: { session },
+      error,
+    } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { username,phone_num:PhoneNumber} },
+      options: { data: { username, phone_num: PhoneNumber } },
     });
-    if (error)console.log(error)
-   // if (!session)
-      //Alert.alert("Please check your inbox for email verification!");
+    if (error) console.log(error);
+    // if (!session)
+    //Alert.alert("Please check your inbox for email verification!");
     setLoading(false);
     console.log("Form submitted successfully!");
   }
@@ -27,17 +30,17 @@ const SignUpScreen = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   useEffect(() => {
     validateForm();
-  }, [email,username, PhoneNumber, password, confirmPassword]);
+  }, [email, username, PhoneNumber, password, confirmPassword]);
 
   const validateForm = () => {
     let errors = {};
     // Validate email field
-    const mail=/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    const mail =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
     if (!email) {
       errors.email = "Email is required.";
-    }
-    else if(!email.match(mail)){
+    } else if (!email.match(mail)) {
       errors.email = "Please enter a valid email.";
     }
     // Validate name field
@@ -45,11 +48,11 @@ const SignUpScreen = () => {
       errors.username = "Username is required.";
     }
     // Validate PhoneNumber field
-    const num=/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/
+    const num = /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/;
     if (!PhoneNumber) {
       errors.PhoneNumber = "PhoneNumber is required.";
     }
-    if(!PhoneNumber.match(num)){
+      else if (!PhoneNumber.match(num)) {
       errors.PhoneNumber = "Please enter a valid number.";
     }
     // Validate password field
@@ -60,7 +63,6 @@ const SignUpScreen = () => {
       errors.password =
         "Password must be at least 7 characters and a capital letter.";
     }
-    
 
     // Validate password field
     if (!confirmPassword) {
@@ -76,8 +78,12 @@ const SignUpScreen = () => {
 
   const handleSubmit = () => {
     if (isFormValid) {
-      signUpWithEmail()
-      
+      signUpWithEmail();
+      setUserEmail("")
+      setUsername("")
+      setPhoneNumber("")
+      setPassword("")
+      setConfrimPassWord("")
     } else {
       // Form is invalid, display error messages
       console.log("Form has errors. Please correct them.");
@@ -85,41 +91,41 @@ const SignUpScreen = () => {
   };
 
   return (
-    <ScrollView>
-      <View style={{ rowGap: 20 }} className="flex-1 pt-10 px-4">
+    <ScrollView contentContainerStyle={{paddingBottom:30}} style={{ rowGap: 50, backgroundColor: "white"}}>
+      <View style={{ rowGap: 30 }} className="flex-1 pt-5 px-6">
         <CustomInput
           placeholder={"Email"}
           value={email}
           setValue={setUserEmail}
+          error={errors.email}
         />
         <CustomInput
           placeholder={"Username"}
           value={username}
           setValue={setUsername}
+          error={errors.username}
         />
         <CustomInput
           placeholder={"Phone number"}
           value={PhoneNumber}
           setValue={setPhoneNumber}
+          error={errors.PhoneNumber}
         />
         <CustomInput
           placeholder={"Password"}
           value={password}
           setValue={setPassword}
           secureTextEntry={true}
+          error={errors.password}
         />
         <CustomInput
           placeholder={"Confirm Password"}
           value={confirmPassword}
           setValue={setConfrimPassWord}
           secureTextEntry={true}
+          error={errors.confirmPassword}
         />
-        <CustomButton text={"Register"} onPress={handleSubmit} />
-        {Object.values(errors).map((error, index) => (
-          <Text key={index} style={styles.error}>
-            {error}
-          </Text>
-        ))}
+        <CustomButton text={"Sign Up"} onPress={handleSubmit} />
       </View>
     </ScrollView>
   );

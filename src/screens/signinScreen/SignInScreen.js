@@ -17,13 +17,13 @@ const SignInScreen = () => {
 
     if (error) Alert.alert(error.message);
     else {
-      navigation.navigate("Vieww");
+      navigation.navigate("ViewScreen");
     }
     setLoading(false);
   }
 
   const onForgetPassPressed = () => {
-    navigation.navigate("Reset your password");
+    navigation.navigate("ForgetPassword");
   };
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
@@ -61,6 +61,7 @@ const SignInScreen = () => {
     if (isFormValid) {
       signInWithEmail();
       setEmail("");
+      setPass("");
 
       // Form is valid, perform the submission logic
       console.log("Form submitted successfully!");
@@ -75,14 +76,20 @@ const SignInScreen = () => {
       style={{ rowGap: 50, backgroundColor: "white" }}
       className="flex-1 pt-5 px-6"
     >
-      <View style={{ rowGap: 20 }}>
-        <CustomInput placeholder={"Email"} value={email} setValue={setEmail} />
+      <View style={{ rowGap: 30 }}>
+        <CustomInput
+          placeholder={"Email"}
+          value={email}
+          setValue={setEmail}
+          error={errors.email}
+        />
 
         <CustomInput
           placeholder={"Password"}
           value={password}
           setValue={setPass}
           secureTextEntry={true}
+          error={errors.password}
         />
 
         <TouchableOpacity onPress={onForgetPassPressed}>
@@ -90,23 +97,11 @@ const SignInScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <CustomButton text={"Sign In"} onPress={handleSubmit} />
-      <View>
-        {Object.values(errors).map((error, index) => (
-          <Text key={index} style={styles.error}>
-            {error}
-          </Text>
-        ))}
-      </View>
+      <CustomButton text={"Login"} onPress={handleSubmit} />
+      <View></View>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  error: {
-    color: "red",
-    fontSize: 20,
-    marginBottom: 12,
-  },
-});
+
 
 export default SignInScreen;

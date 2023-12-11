@@ -7,6 +7,7 @@ import ForgetPassword from "../screens/forgetpassword/ForgetPassword";
 import { Image, Text, View, useWindowDimensions } from "react-native";
 import Logo from "../../assets/logo.png";
 import React from "react";
+import ViewScreen from "../screens/View";
 const Tab = createMaterialTopTabNavigator();
 const AuthTabNavigator = () => {
   const insets = useSafeAreaInsets();
@@ -46,12 +47,12 @@ export const AuthStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name="Vieww"
-        component={View}
+        name="ViewScreen"
+        component={ViewScreen}
         options={{ headerBackTitleVisible: false }}
       />
       <Stack.Screen
-        name="Reset your password"
+        name="ForgetPassword"
         component={ForgetPassword}
         options={{ headerBackTitleVisible: false }}
       />

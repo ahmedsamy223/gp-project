@@ -5,7 +5,7 @@ const CustomButton = ({ text, onPress }) => (
     className="bg-blue-500 rounded-3xl p-4 items-center"
     onPress={onPress}
   >
-    <Text className="text-white text font-bold text-base">{text}</Text>
+    <Text className="text-white text font-black text-xl">{text}</Text>
   </TouchableOpacity>
 );
 export default CustomButton;

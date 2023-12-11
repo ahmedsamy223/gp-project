@@ -61,26 +61,13 @@ const ForgetPassword = () => {
       } 
   }; 
   return (
-    <View style={{ rowGap: 20 }} className="flex-1 pt-10 px-4">
+    <View style={{ rowGap: 20 }} className="flex-1 pt-10 px-4 bg-white">
       <CustomInput placeholder={"Phone number / Username"}/>
-    <CustomInput placeholder={'New Password'} value={password} setValue={setText} secureTextEntry={true}/>
-    <CustomInput placeholder={'Re-enter the new password'} value={rePassword} setValue={setPass} secureTextEntry={true}/>
+    <CustomInput placeholder={'New Password'} value={password} setValue={setText} secureTextEntry={true} error={errors.password}/>
+    <CustomInput placeholder={'Re-enter the new password'} value={rePassword} setValue={setPass} secureTextEntry={true} error={errors.rePassword}/>
     <CustomButton text={'Reset password'} onPress={handleSubmit}/>
-    {Object.values(errors).map((error, index) => ( 
-                <Text key={index} style={styles.error}> 
-                    {error} 
-                </Text> 
-            ))} 
     </View>
   )
 }
-const styles = StyleSheet.create({ 
-
-  error: { 
-      color: 'red', 
-      fontSize: 20, 
-      marginBottom: 12, 
-  }, 
-}); 
 
 export default ForgetPassword
